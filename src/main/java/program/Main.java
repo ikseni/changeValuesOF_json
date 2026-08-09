@@ -1,30 +1,32 @@
 package program;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import java.awt.*;
 import java.io.File;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
-
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите путь к папке: ");
-        String filePathScan = "";
-
 
         while(true){
-            filePathScan = scanner.nextLine();
-            File file = FileName.wholeFileName(filePathScan);
-            System.out.println(String.valueOf(file));
+            String filePathScan = scanner.nextLine();
+            File file = FilesReader.wholeFileName(filePathScan);
+
             if (!file.exists()) {
-                System.out.print("По такому пути не удалось найти папку, попробуйте снова: ");
+                System.out.print("По пути: " + file + " не удалось найти папку, попробуйте снова: ");
             } else {
-                String name = String.valueOf(file);
-                System.out.println("Файл найден!!" + name);
+                List<File> listOfJsonFiles = FilesReader.dirsReader(file);
+                if(!listOfJsonFiles.isEmpty()){
+                    for(File list: listOfJsonFiles){
+                        System.out.println(list);
+                    }
+                }
                 break;
             }
         }
+
 
     }
 
